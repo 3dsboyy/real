@@ -4,23 +4,21 @@ local TweenService = game:GetService('TweenService')
 local HttpService = game:GetService('HttpService')
 local CoreGui = game:GetService('CoreGui')
 
-local Mouse = LocalPlayer:GetMouse();
-
-
+local Mouse = LocalPlayer:GetMouse()
 local Library = {
 	connections = {};
-    Flags = {};
-    Enabled = true;
-    slider_drag = false;
-    core = nil;
-    dragging = false;
-    drag_position = nil;
-    start_position = nil;
+	Flags = {};
+	Enabled = false;
+	slider_drag = false;
+	core = nil;
+	dragging = false;
+	drag_position = nil;
+	start_position = nil;
 }
 
 
-if not isfolder("nigga hub") then
-    makefolder("nigga hub")
+if not isfolder("cac hub") then
+	makefolder("cac hub")
 end
 
 function Library:disconnect()
@@ -36,37 +34,36 @@ end
 
 function Library:clear()
 	for _, object in CoreGui:GetChildren() do
-		if object.Name ~= "nigga" then
+		if object.Name ~= "cac" then
 			continue
 		end
-	
+
 		object:Destroy()
 	end
 end
 
 function Library:exist()
-    if not Library.core then return end
-    if not Library.core.Parent then return end
-    return true
+	if not Library.core then return end
+	if not Library.core.Parent then return end
+	return true
 end
 
 function Library:save_flags()
-    if not Library.exist() then return end
+	if not Library.exist() then return end
 
-    local flags = HttpService:JSONEncode(Library.Flags)
-    writefile(`nigga hub/{game.GameId}.lua`, flags)
+	local flags = HttpService:JSONEncode(Library.Flags)
+	writefile(`cac hub/{game.GameId}.lua`, flags)
 end
 
 function Library:load_flags()
-    if not isfile(`nigga hub/{game.GameId}.lua`) then Library.save_flags() return end
+	if not isfile(`cac hub/{game.GameId}.lua`) then Library.save_flags() return end
 
-    local flags = readfile(`nigga hub/{game.GameId}.lua`)
-    if not flags then Library.save_flags() return end
+	local flags = readfile(`cac hub/{game.GameId}.lua`)
+	if not flags then Library.save_flags() return end
 
-    Library.Flags = HttpService:JSONDecode(flags)
+	Library.Flags = HttpService:JSONDecode(flags)
 end
 
-Library.load_flags()
 Library.clear()
 
 function Library:open()
@@ -108,11 +105,11 @@ function Library:drag()
 	if not Library.drag_position then
 		return
 	end
-	
+
 	if not Library.start_position then
 		return
 	end
-	
+
 	local delta = self.input.Position - Library.drag_position
 	local position = UDim2.new(Library.start_position.X.Scale, Library.start_position.X.Offset + delta.X, Library.start_position.Y.Scale, Library.start_position.Y.Offset + delta.Y)
 
@@ -120,7 +117,7 @@ function Library:drag()
 		Position = position
 	}):Play()
 
-    TweenService:Create(self.container.Shadow, TweenInfo.new(0.2), {
+	TweenService:Create(self.container.Shadow, TweenInfo.new(0.2), {
 		Position = position
 	}):Play()
 end
@@ -137,10 +134,10 @@ end
 
 function Library:new()
 	local container = Instance.new("ScreenGui")
-	container.Name = "nigga"
-    container.Parent = CoreGui
+	container.Name = "cac"
+	container.Parent = CoreGui
 
-    Library.core = container
+	Library.core = container
 
 	local Shadow = Instance.new("ImageLabel")
 	Shadow.Name = "Shadow"
@@ -191,7 +188,7 @@ function Library:new()
 	Logo.Position = UDim2.new(0.0387367606, 0, 0.5, 0)
 	Logo.Size = UDim2.new(0, 30, 0, 25)
 	Logo.Image = ""
-	
+
 	local TextLabel = Instance.new("TextLabel")
 	TextLabel.Parent = Top
 	TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -218,7 +215,7 @@ function Library:new()
 	Line.Position = UDim2.new(0.296137333, 0, 0.0915492922, 0)
 	Line.Size = UDim2.new(0, 2, 0, 387)
 
-    local tabs = Instance.new("ScrollingFrame")
+	local tabs = Instance.new("ScrollingFrame")
 	tabs.Name = "Tabs"
 	tabs.Active = true
 	tabs.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -229,7 +226,7 @@ function Library:new()
 	tabs.Size = UDim2.new(0, 209, 0, 386)
 	tabs.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
 	tabs.ScrollBarThickness = 0
-    tabs.Parent = container.Container
+	tabs.Parent = container.Container
 
 	local tabslist = Instance.new("UIListLayout")
 	tabslist.Parent = tabs
@@ -244,7 +241,7 @@ function Library:new()
 	local tabsCorner = Instance.new("UICorner")
 	tabsCorner.Parent = tabs
 
-    local mobile_button = Instance.new("TextButton")
+	local mobile_button = Instance.new("TextButton")
 	mobile_button.Name = "Mobile"
 	mobile_button.BackgroundColor3 = Color3.fromRGB(27, 28, 33)
 	mobile_button.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -257,7 +254,7 @@ function Library:new()
 	mobile_button.Text = ""
 	mobile_button.TextColor3 = Color3.fromRGB(0, 0, 0)
 	mobile_button.TextSize = 14.000
-    mobile_button.Parent = container
+	mobile_button.Parent = container
 
 	local UICorner = Instance.new("UICorner")
 	UICorner.CornerRadius = UDim.new(0, 13)
@@ -306,69 +303,69 @@ function Library:new()
 	Icon.Position = UDim2.new(0.268000007, 0, 0.5, 0)
 	Icon.Size = UDim2.new(0, 15, 0, 15)
 	Icon.Image = "rbxassetid://17183279677"
-    container.Container.InputBegan:Connect(function(input: InputObject)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            Library.dragging = true
-            Library.drag_position = input.Position
-            Library.start_position = container.Container.Position
+	container.Container.InputBegan:Connect(function(input: InputObject)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			Library.dragging = true
+			Library.drag_position = input.Position
+			Library.start_position = container.Container.Position
 
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    Library.dragging = false
-                    Library.drag_position = nil
-                    Library.start_position = nil
-                end
-            end)
-        end
-    end)
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					Library.dragging = false
+					Library.drag_position = nil
+					Library.start_position = nil
+				end
+			end)
+		end
+	end)
 
-    UserInputService.InputChanged:Connect(function(input: InputObject)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            Library.drag({
-                input = input,
-                container = container
-            })
-        end
-    end)
+	UserInputService.InputChanged:Connect(function(input: InputObject)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			Library.drag({
+				input = input,
+				container = container
+			})
+		end
+	end)
 
-    UserInputService.InputBegan:Connect(function(input: InputObject, process: boolean)
-        if process then return end
+	UserInputService.InputBegan:Connect(function(input: InputObject, process: boolean)
+		if process then return end
 
-        if not Library.exist() then return end
+		if not Library.exist() then return end
 
-        if input.KeyCode == Enum.KeyCode.Insert then
-            Library.visible(container)
-        end
-    end)
+		if input.KeyCode == Enum.KeyCode.Insert then
+			Library.visible(container)
+		end
+	end)
 
-    mobile_button.MouseButton1Click:Connect(function()
-        Library.visible(container)
-    end)
+	mobile_button.MouseButton1Click:Connect(function()
+		Library.visible(container)
+	end)
 
-    local Tab = {}
+	local Tab = {}
 
-    function Tab:update_sections()
-        self.left_section.Visible = true
-        self.right_section.Visible = true
+	function Tab:update_sections()
+		self.left_section.Visible = true
+		self.right_section.Visible = true
 
-        for _, object in container.Container:GetChildren() do
-            if not object.Name:find("Section") then
-                continue
-            end
+		for _, object in container.Container:GetChildren() do
+			if not object.Name:find("Section") then
+				continue
+			end
 
-            if object == self.left_section then 
-                continue
-            end
+			if object == self.left_section then 
+				continue
+			end
 
-            if object == self.right_section then
-                continue
-            end
+			if object == self.right_section then
+				continue
+			end
 
-            object.Visible = false
-        end
-    end
+			object.Visible = false
+		end
+	end
 
-    function Tab:open_tab()
+	function Tab:open_tab()
 		Tab.update_sections({
 			left_section = self.left_section,
 			right_section = self.right_section
@@ -406,19 +403,19 @@ function Library:new()
 			TweenService:Create(object.Glow, TweenInfo.new(0.4), {
 				ImageTransparency = 1
 			}):Play()
-	
+
 			TweenService:Create(object.TextLabel, TweenInfo.new(0.4), {
 				TextTransparency = 0.5
 			}):Play()
-	
+
 			TweenService:Create(object.Logo, TweenInfo.new(0.4), {
 				ImageTransparency = 0.5
 			}):Play()
 		end
 	end
 
-    function Tab:create_tab()
-        local tab = Instance.new("TextButton")
+	function Tab:create_tab()
+		local tab = Instance.new("TextButton")
 		tab.Name = "Tab"
 		tab.BackgroundColor3 = Color3.fromRGB(27, 28, 33)
 		tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -563,9 +560,9 @@ function Library:new()
 			})
 		end)
 
-        local Module = {}
+		local Module = {}
 
-        function Module:create_title()
+		function Module:create_title()
 			local section = self.section == 'left' and left_section or right_section
 
 			local title = Instance.new("TextLabel")
@@ -616,7 +613,7 @@ function Library:new()
 			end
 		end
 
-        function Module:create_toggle()
+		function Module:create_toggle()
 			local section = self.section == 'left' and left_section or right_section
 
 			local toggle = Instance.new("TextButton")
@@ -634,7 +631,7 @@ function Library:new()
 			local UICorner = Instance.new("UICorner")
 			UICorner.CornerRadius = UDim.new(0, 10)
 			UICorner.Parent = toggle
-	
+
 			local Checkbox = Instance.new("Frame")
 			Checkbox.Name = "Checkbox"
 			Checkbox.Parent = toggle
@@ -705,7 +702,7 @@ function Library:new()
 			end
 
 			self.callback(Library.Flags[self.flag])
-			
+
 			Module.update_toggle({
 				state = Library.Flags[self.flag],
 				toggle = toggle
@@ -713,7 +710,6 @@ function Library:new()
 
 			toggle.MouseButton1Click:Connect(function()
 				Library.Flags[self.flag] = not Library.Flags[self.flag]
-				Library.save_flags()
 
 				Module.update_toggle({
 					state = Library.Flags[self.flag],
@@ -725,7 +721,7 @@ function Library:new()
 		end
 
 
-        function Module:update_slider()
+		function Module:update_slider()
 			local result = math.clamp((Mouse.X - self.slider.Box.AbsolutePosition.X) / self.slider.Box.AbsoluteSize.X, 0, 1)
 
 			if not result then
@@ -734,14 +730,14 @@ function Library:new()
 
 			local number = math.floor(((self.maximum_value - self.minimum_value) * result) + self.minimum_value)
 			local slider_size = math.clamp(result, 0.001, 0.999)
-			
+
 			self.slider.Box.Fill.UIGradient.Transparency = NumberSequence.new({
 				NumberSequenceKeypoint.new(0, 0),
 				NumberSequenceKeypoint.new(slider_size, 0),
 				NumberSequenceKeypoint.new(math.min(slider_size + 0.001, 1), 1),
 				NumberSequenceKeypoint.new(1, 1)
 			})
-			
+
 			self.slider.Box.Glow.UIGradient.Transparency = NumberSequence.new({
 				NumberSequenceKeypoint.new(0, 0),
 				NumberSequenceKeypoint.new(slider_size, 0),
@@ -757,16 +753,16 @@ function Library:new()
 
 		function Module:slider_loop()
 			Library.slider_drag = true
-			
+
 			while Library.slider_drag do
 				Module.update_slider(self)
-				
+
 				task.wait()
 			end
 		end
 
 
-        function Module:create_slider()
+		function Module:create_slider()
 			local drag = false
 			local section = self.section == 'left' and left_section or right_section
 
@@ -837,7 +833,7 @@ function Library:new()
 			local UIGradient_2 = Instance.new("UIGradient")
 			UIGradient_2.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.50, 0.00), NumberSequenceKeypoint.new(0.50, 1.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 			UIGradient_2.Parent = Fill
-			
+
 			local Hitbox = Instance.new("TextButton")
 			Hitbox.Name = "Hitbox"
 			Hitbox.Parent = Box
@@ -915,16 +911,15 @@ function Library:new()
 					minimum_value = self.minimum_value,
 				})
 			end)
-			
+
 			UserInputService.InputEnded:Connect(function(input: InputObject, process: boolean)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 					Library.slider_drag = false
-					Library.save_flags()
 				end
 			end)
 		end
 
-        function Module:create_dropdown()
+		function Module:create_dropdown()
 			local section = self.section == 'left' and left_section or right_section
 			local list_size = 6
 			local open = false
@@ -970,11 +965,11 @@ function Library:new()
 			UIListLayout.Parent = dropdown
 			UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-			
+
 			local UIPadding = Instance.new("UIPadding")
 			UIPadding.Parent = dropdown
 			UIPadding.PaddingTop = UDim.new(0, 6)
-			
+
 			local Box = Instance.new("Frame")
 			Box.Name = "Box"
 			Box.Parent = dropdown
@@ -1065,7 +1060,7 @@ function Library:new()
 					Rotation = 180
 				}):Play()
 			end
-			
+
 			function Dropdown:close()
 				dropdown.Box.TextLabel.Text = self.name
 				TweenService:Create(dropdown.Box.Options, TweenInfo.new(0.4), {
@@ -1122,19 +1117,18 @@ function Library:new()
 					local new_option = option:Clone()
 					new_option.Parent = dropdown.Box.Options
 					new_option.Text = value
-	
+
 					if value == Library.Flags[self.flag] then
 						new_option.TextTransparency = 0
 					end
-	
+
 					new_option.MouseButton1Click:Connect(function()
 						Library.Flags[self.flag] = value
-						
+
 						if list_open then
 							dropdown.Box.TextLabel.Text = Library.Flags[self.flag]
 						end
 						self.callback(Library.Flags[self.flag])
-						Library.save_flags()
 
 						Dropdown.select_option({
 							new_option = new_option,
@@ -1147,7 +1141,7 @@ function Library:new()
 			if not Library.Flags[self.flag] then
 				Library.Flags[self.flag] = self.option
 			end
-			
+
 			self.callback(Library.Flags[self.flag])
 			Dropdown.update(self)
 
@@ -1164,10 +1158,10 @@ function Library:new()
 			return Dropdown
 		end
 
-        function Module:create_textbox()
-            local section = self.section == 'left' and left_section or right_section
+		function Module:create_textbox()
+			local section = self.section == 'left' and left_section or right_section
 			local Textbox = {}
-            local textbox = Instance.new("TextButton")
+			local textbox = Instance.new("TextButton")
 			textbox.Name = "TextBox"
 			textbox.BackgroundColor3 = Color3.fromRGB(27, 28, 33)
 			textbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1178,7 +1172,7 @@ function Library:new()
 			textbox.Text = ""
 			textbox.TextColor3 = Color3.fromRGB(0, 0, 0)
 			textbox.TextSize = 14.000				
-            textbox.Parent = section
+			textbox.Parent = section
 
 			local UICorner = Instance.new("UICorner")
 			UICorner.CornerRadius = UDim.new(0, 10)
@@ -1192,7 +1186,7 @@ function Library:new()
 			local UIPadding = Instance.new("UIPadding")
 			UIPadding.Parent = textbox
 			UIPadding.PaddingTop = UDim.new(0, 6)
-			
+
 			local Box = Instance.new("Frame")
 			Box.Name = "Box"
 			Box.Parent = textbox
@@ -1204,7 +1198,7 @@ function Library:new()
 			Box.Size = UDim2.new(0, 202, 0, 25)
 			Box.ZIndex = 2
 
-			
+
 			local UICorner_2 = Instance.new("UICorner")
 			UICorner_2.CornerRadius = UDim.new(0, 6)
 			UICorner_2.Parent = Box
@@ -1234,7 +1228,6 @@ function Library:new()
 			self.callback(Library.Flags[self.flag])
 			textbox.Box.TextHolder.FocusLost:Connect(function()
 				self.callback(textbox.Box.TextHolder.Text)
-				Library.save_flags()
 			end)
 
 			function Textbox:update(text)
@@ -1242,8 +1235,8 @@ function Library:new()
 				self.callback(text)
 			end
 
-            return Textbox;
-        end
+			return Textbox;
+		end
 		function Module:create_keybind()
 			local section = self.section == 'left' and left_section or right_section
 			local keybind = Instance.new("TextButton")
@@ -1264,7 +1257,7 @@ function Library:new()
 
 			UICorner.CornerRadius = UDim.new(0, 10)
 			UICorner.Parent = keybind
-			
+
 			local TextLabel = Instance.new("TextLabel")
 			TextLabel.Parent = keybind
 			TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1296,7 +1289,7 @@ function Library:new()
 			UICorner_2.CornerRadius = UDim.new(0, 4)
 			UICorner_2.Parent = Box
 
-			
+
 			local TextLabel_2 = Instance.new("TextLabel")
 			TextLabel_2.Parent = Box
 			TextLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1326,7 +1319,6 @@ function Library:new()
 				if a.KeyCode.Name ~= 'Unknown' then
 					keybind.Box.TextLabel.Text = a.KeyCode.Name
 					Library.Flags[self.flag] = a.KeyCode.Name
-					Library.save_flags()
 				end
 			end)
 
@@ -1338,9 +1330,8 @@ function Library:new()
 				end
 			end)
 		end
-        return Module
-    end
-    return Tab
+		return Module
+	end
+	return Tab
 end
-
-return library
+return Library
